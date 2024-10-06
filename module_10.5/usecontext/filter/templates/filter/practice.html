@@ -5,7 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
+<body style="text-align: center;">
     <h1>This is Practice Page</h1>
+    <h1>{{ des | join:" " }}</h1>
+    <h1>{{ curdat | date:"D d M Y" }}</h1>
+    <h1>{{ defa | default:"nothing here" }}</h1>
+    <h1>total:{{num|add:"5"}}</h1>
+    <h1>{{ lst1 }}</h1>
+    <h1>{{name | capfirst}}</h1>
+    <h1>{{ fun | cut:" " }}</h1>
+    <h1>{{"January - February - March" | cut:"-"}}</h1>
+    {{ d | dictsort:"name" }}
+    <h1>{{lst1 |first}}</h1>
+    <h1>{{lst1 |last}}</h1>
+    <h1>{{lst1 |length}}</h1>
+    <h1>{{name|lower}}</h1>
+    <h1>{{name|upper}}</h1>
+    <h1>{{fun|title}}</h1>
+    <h1>{{des|random}}</h1>
+    <h1>{{ lst1 | slice:":2" }}</h1>
+    <h1>word:{{ fun | wordcount }}</h1>
 </body>
 </html>
