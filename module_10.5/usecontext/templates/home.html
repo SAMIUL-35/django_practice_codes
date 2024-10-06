@@ -10,6 +10,18 @@
     <a href="/">Home</a>
     <a href="/filter/">Practice Page</a>
     <h1 style="margin-top:20px">{{name}}</h1>
+    {{lst|length}}
+    <h1>{{ num | add:"2" }}</h1>
+    <h1>{{ value | addslashes }}</h1>
+    <h1>{{ name | capfirst }}</h1>
+    <h1>{{ value | center:"15" }}</h1>
+    <h1>{{ value | cut:" " }}</h1>
+    <h1>{{ datetime | date:"D d M Y" }}</h1>
+    <h1>{{ empty | default:"nothing" }}</h1>
+    <h1> {{ name_list | dictsort:"age" }}</h1>
+    {{ num | make_list }}{{ value | random }}{{ some_list | slice:":2" }}
+    <h1>{{ datetime | time:"H:i" }}</h1>
+    {{ value | upper }}{{ value | wordcount }}
     
 </body>
 </html>
