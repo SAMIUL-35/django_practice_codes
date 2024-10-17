@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3 class="text-center container">This is FOOD LIST</h3>
+<div class="container">
+    <div class="row">
+        {% for meal in meals %}
+        <div class="col-md-4 mb-4">  
+            <div class="card" style="width: 100%;"> 
+                <img src="{{ meal.strMealThumb }}" class="card-img-top" alt="{{ meal.strMeal }}">
+                <div class="card-body">
+                    <p class="card-text text-bold">{{ meal.strMeal }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}
