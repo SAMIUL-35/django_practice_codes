@@ -22,22 +22,31 @@
             <li class="nav-item">
               <a class="nav-link active text-dark" aria-current="page" href="#">Home</a>
             </li>
+            {% if user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link text-dark" href="#">Add Album</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-dark" href="#">Add Musician</a>
             </li>
+            {% endif %}
           </ul>
         </div>
-        <form class="d-flex gap-2">
-          <a class="btn btn-info" href="{% url 'admin:index' %}">Admin</a>
+        <div class="d-flex gap-2">
+          {% if user.is_authenticated %}
+          <a class="btn btn-info" href="{% url 'profile' %}">Profile</a>
+          <form method="post" action="{% url 'logout' %}" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-info">Logout</button>
+          </form>
+          {% else %}
           <a class="btn btn-info" href="{% url 'register' %}">Register</a>
           <a class="btn btn-info" href="{% url 'login' %}">Login</a>
-          
-        </form>
+          {% endif %}
+        </div>
       </div>
     </nav>
+    
     
     {% block content %}{% endblock content %}
 
