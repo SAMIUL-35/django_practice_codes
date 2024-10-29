@@ -1,7 +1,44 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h3>{{name}}<h3/>
+<div class="container">
+    
 
+    <h2>All Albums</h2>
 
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Musician Name</th>
+                <th>Email</th>
+                <th>Album Rating</th>
+                <th>Instrument Type</th>
+                <th>Album Name</th>
+                <th>Release Date</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for album in albums %}
+            <tr>
+                <td>{{ album.id }}</td>
+                <td>{{ album.musician.first_Name }} {{ album.musician.last_Name }}</td>
+                <td>{{ album.musician.email }}</td>
+                <td>{{ album.rating }}</td>  
+                <td>{{ album.musician.Instrument_Type }}</td>  
+                <td>{{ album.Name }}</td>
+                <td>{{ album.release_date }}</td>  
+                <td>
+                    
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8">No albums available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock content %}

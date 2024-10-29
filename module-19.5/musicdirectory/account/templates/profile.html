@@ -2,29 +2,75 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="container w-50 mt-4">
-  
-  
-  <h1>Profile</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <h1>Profile</h1>
 
-  
-  {% if messages %}
-    {% for message in messages %}
-      <div class="alert alert-{{ message.tags }} mt-2">
-        {{ message }}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} mt-2">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <div class="mb-3">
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
       </div>
-    {% endfor %}
-  {% endif %}
 
+      <a class="btn btn-info" href="{% url 'edit_profile' user.id %}">Edit Profile</a>
+    </div>
+
+    <div class="col-md-9">
+      <h2>All Albums</h2>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Musician Name</th>
+            <th>Email</th>
+            <th>Album Rating</th>
+            <th>Instrument Type</th>
+            <th>Album Name</th>
+            <th>Release Date</th>
+            <th>Actions</th>  
+          </tr>
+        </thead>
+        <tbody>
+          {% for album in albums %}
+            <tr>
+              <td>{{ album.id }}</td>
+              <td>
+              <a class="btn btn-warning btn-sm" href="{% url 'edit_musician' album.id %}">{{ album.musician.first_Name }} {{ album.musician.last_Name }}</a>
+              </td>
+              <td>{{ album.musician.email }}</td>
+              <td>{{ album.rating }}</td>
+              <td>{{ album.musician.Instrument_Type }}</td>
+              <td>{{ album.Name }}</td>
+              <td>{{ album.release_date }}</td>
+              
+               <td>
+  <div class="d-flex gap-1">
+  <a class="btn btn-warning btn-sm" href="{% url 'edit_album' album.id %}">Edit</a>
+  <a class="btn btn-danger btn-sm" href="{% url 'delete_album' album.id %}" >Delete</a>
   
-  <div class="mb-3">
-    <p><strong>Username:</strong> {{ user.username }}</p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    
+  <div/>
+
+</td>
+
+              
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="8">No albums available.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
   </div>
-
- 
-  <a class="btn btn-info" href="{% url 'edit_profile' user.id %}">Edit Profile</a>
-
 </div>
 {% endblock content %}

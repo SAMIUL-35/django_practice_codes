@@ -7,6 +7,8 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('account.urls')),
+    path('musician/', include('musician.urls')),
+    path('album/', include('album.urls')),
     path('', views.home.as_view(), name='home'),
 ]
 

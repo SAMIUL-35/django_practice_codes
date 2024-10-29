@@ -6,7 +6,7 @@ from django.views.generic import CreateView, UpdateView, TemplateView
 from .forms import RegisterForm, ChangeUserForm
 from django.contrib import messages
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
-
+from album.models import Albummodel
 class Register(CreateView):
     form_class = RegisterForm
     template_name = 'registration.html'
@@ -64,6 +64,10 @@ class pass_change(PasswordChangeView):
 
 class profile(TemplateView):
     template_name = 'profile.html'
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        context['albums'] = Albummodel.objects.all()
+        return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
