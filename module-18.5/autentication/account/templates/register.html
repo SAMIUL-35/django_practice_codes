@@ -2,32 +2,39 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<h3>{{ type|capfirst }}</h3>
-<div class="container">
-    <form method="post" style="max-width: 500px; margin: auto;">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
 
-    {% for message in messages %}
-        <div class="alert alert-info">{{ message }}</div>
-    {% endfor %}
-    
-    {% if form.errors %}
-        <div class="alert alert-danger">
-            <strong>Please correct the following errors:</strong>
-            <ul>
-                {% for field in form %}
-                    {% for error in field.errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                {% endfor %}
-                {% for error in form.non_field_errors %}
+
+{% for message in messages %}
+    <div class="alert alert-info">{{ message }}</div>
+{% endfor %}
+
+{% if form.errors %}
+    <div class="alert alert-danger">
+        <strong>Please correct the following errors:</strong>
+        <ul>
+            {% for field in form %}
+                {% for error in field.errors %}
                     <li>{{ error }}</li>
                 {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
-</div>
-{% endblock content %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+<form method="post" style="max-width: 500px; margin: auto;">
+    <h3>{% if type == 'register' %}Register{% else %}Login{% endif %}</h3>
+    {% csrf_token %}
+    {{ form|crispy }}  
+    <button type="submit" class="btn btn-primary">{% if type == 'register' %}Register{% else %}Login{% endif %}</button>
+    {% if type == 'login' %}
+<p>Don't have an account? <a href="{% url 'register' %}">Sign up here</a>.</p>
+{% else %}
+<p>Already have an account? <a href="{% url 'login' %}">Log in here</a>.</p>
+{% endif %}
+</form>
+
+
+{% endblock %}

@@ -1,7 +1,12 @@
-{%  extends "base.html" %}
+{% extends "base.html" %}
 
-{% block content%}
-<h3>This is profile</h3>
+{% block content %}
+<h3>This is your profile</h3>
+
+{% for message in messages %}
+    <div class="alert alert-info">{{ message }}</div>  
+{% endfor %}
+
 <a class="me-4 btn btn-primary" href="{% url 'edit_profile' %}">Edit profile</a>
 
-{% endblock content%}
+{% endblock content %}
