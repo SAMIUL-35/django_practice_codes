@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto max-w-lg mt-8">
+  <h1 class="text-2xl font-bold text-gray-800 mb-6">Change Your Password</h1>
+
+  <!-- Display messages -->
+  {% if messages %}
+    {% for message in messages %}
+      <div class="p-4 mb-4 text-white 
+        {% if message.tags == 'error' %} bg-red-600 {% else %} bg-green-600 {% endif %} rounded shadow-md">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <!-- Password Change Form -->
+  <div class="bg-gray-50 p-6 border border-gray-300 rounded-md shadow">
+    <form method="post">
+      {% csrf_token %}
+      
+      <div class="mb-4">
+        <label for="id_old_password" class="block text-gray-700 font-medium mb-1">Old Password:</label>
+        <input 
+          type="password" 
+          name="old_password" 
+          id="id_old_password" 
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          required>
+      </div>
+
+      <div class="mb-4">
+        <label for="id_new_password1" class="block text-gray-700 font-medium mb-1">New Password:</label>
+        <input 
+          type="password" 
+          name="new_password1" 
+          id="id_new_password1" 
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          required>
+        <p class="text-sm text-gray-500 mt-1">
+          Your password must contain at least 8 characters and cannot be entirely numeric.
+        </p>
+      </div>
+
+      <div class="mb-6">
+        <label for="id_new_password2" class="block text-gray-700 font-medium mb-1">Confirm New Password:</label>
+        <input 
+          type="password" 
+          name="new_password2" 
+          id="id_new_password2" 
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          required>
+        <p class="text-sm text-gray-500 mt-1">Re-enter the new password for confirmation.</p>
+      </div>
+
+      <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+        Change Password
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}
