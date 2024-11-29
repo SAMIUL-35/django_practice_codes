@@ -77,16 +77,38 @@ class WithdrawMoneyView(TransactionCreateMixin):
 
     def form_valid(self, form):
         amount = form.cleaned_data.get('amount')
+        account = self.request.user.account
 
-        self.request.user.account.balance -= form.cleaned_data.get('amount')
-        self.request.user.account.save(update_fields=['balance'])
+        # Check if the bank is bankrupt
+        if account.is_bankrupt:
+            messages.error(
+                self.request,
+                "The bank is bankrupt, and withdrawals are not possible at this time."
+            )
+            return redirect('transaction_report')  # Redirect if the bank is bankrupt
 
-        messages.success(
-            self.request,
-            f'Successfully withdrawn {"{:,.2f}".format(float(amount))}$ from your account'
-        )
+        # Check if the user has enough balance for withdrawal
+        if account.balance >= amount:
+            account.balance -= amount
+            account.save(update_fields=['balance'])
 
-        return super().form_valid(form)
+            messages.success(
+                self.request,
+                f"Successfully withdrawn {'{:,.2f}'.format(float(amount))}$ from your account."
+            )
+            return redirect('transaction_report')  # Redirect to transaction report after success
+        else:
+            # Insufficient funds: mark the bank as bankrupt
+            account.is_bankrupt = True
+            account.save(update_fields=['is_bankrupt'])
+
+            messages.error(
+                self.request,
+                "The bank is now bankrupt, and no further withdrawals can be processed."
+            )
+            return redirect('transaction_report')  # Redirect to transaction report after failure
+        
+        return super().form_valid(form)  # This line can be removed as it's not necessary anymore
 
 class LoanRequestView(TransactionCreateMixin):
     form_class = LoanRequestForm
